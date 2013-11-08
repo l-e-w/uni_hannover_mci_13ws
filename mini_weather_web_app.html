@@ -15,7 +15,16 @@ request.send();
 function handler() {
 if (this.readyState == this.DONE) {
 if (this.status == 200) { // HTTP OK
-var json = JSON.parse(this.responseText);
+if(typeof(Storage)!=="undefined")
+{
+localStorage.json = this.responseText;
+}
+parse(JSON.parse(this.responseText));
+}
+}
+}
+
+function parse(json) {
 var city = json.name;
 var temperatue = Math.round((json.main.temp - 273.15) * 100) / 100;
 var weather = json.weather[0].description;
@@ -32,17 +41,22 @@ var dayTime = "d";
 } else {
 var dayTime = "n";
 }
+var sunState = (timeStamp - json.sys.sunrise) / (json.sys.sunset - json.sys.sunrise) *100; // current position of the sun between sunrise and sunset in percent
 document.getElementById("city").innerHTML = city;
 document.getElementById("temperature").innerHTML = "Current temperature: "+temperatue+"&#176; Celsius";
 document.getElementById("weather").innerHTML = "Current weather condition: "+weather;
-document.getElementById("weatherIcon").src= "http://openweathermap.org/img/w/"+weatherIdIcon[weatherId]+dayTime+".png";
-document.getElementById("object").innerHTML = this.responseText;
-}
-}
+document.getElementById("weatherIcon").src = "http://openweathermap.org/img/w/"+weatherIdIcon[weatherId]+dayTime+".png";
+/* Vendor prefixed versions for gradient backgrounds. I was only able to test positve on latest Firefox and Chromium. */
+document.body.style.background = "-moz-linear-gradient(left, #ffffff "+(sunState-10)+"%, #ffff00 "+sunState+"%, #ffffff "+(sunState+10)+"%)";
+document.body.style.background = "-webkit-linear-gradient(left, #ffffff "+(sunState-10)+"%,#ffff00 "+sunState+"%,#ffffff "+(sunState+10)+"%)";
+document.body.style.background = "-webkit-gradient(linear, left top, right top, color-stop("+(sunState-10)+"%,#ffffff), color-stop("+sunState+"%,#ffff00), color-stop("+(sunState+10)+"%,#ffffff));";
+document.body.style.background = "-o-linear-gradient(left, #ffffff "+(sunState-10)+"%,#ffff00 "+sunState+"%,#ffffff "+(sunState+10)+"%)";
+document.body.style.background = "-ms-linear-gradient(left, #ffffff "+(sunState-10)+"%,#ffff00 "+sunState+"%,#ffffff "+(sunState+10)+"%)";
+document.body.style.background = "linear-gradient(to right, #ffffff "+(sunState-10)+"%,#ffff00 "+sunState+"%,#ffffff "+(sunState+10)+"%)";
 }
 </script>
 </head>
-<body>
+<body onload="parse(JSON.parse(localStorage.json))">
 <h1 id ="city">Your City</h1>
 <input type="text" id="cityInput">
 <button onclick="send();">Send</button>
