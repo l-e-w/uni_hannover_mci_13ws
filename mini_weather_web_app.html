@@ -29,23 +29,13 @@ var city = json.name;
 var temperatue = Math.round((json.main.temp - 273.15) * 100) / 100;
 var weather = json.weather[0].description;
 var weatherId = json.weather[0].id;
-var weatherIdIcon = {200: "11", 201: "11", 202: "11", 210: "11", 212: "11", 221: "11", 230: "11", 231: "11", 232: "11", 
-300: "09", 301: "09", 302: "09", 310: "09", 311: "09", 312: "09", 313: "09", 314: "09", 321: "09", 
-500: "10", 501: "10", 502: "10", 503: "10", 504: "10", 511: "13", 520: "09", 521: "09", 522: "09", 531: "09", 
-600: "13", 601: "13", 602: "13", 611: "13", 612: "13", 615: "13", 616: "13", 620: "13", 621: "13", 622: "13", 
-701: "50", 711: "50", 721: "50", 731: "50", 741: "50", 751: "50", 761: "50", 762: "50", 771: "50", 781: "50", 
-800: "01", 801: "02", 802: "03", 803: "04", 804: "04"};
+var weatherIcon = json.weather[0].icon;
 var timeStamp = Math.round((new Date()).getTime() / 1000);
-if ((json.sys.sunrise < timeStamp) && (json.sys.sunset > timeStamp)) {
-var dayTime = "d";
-} else {
-var dayTime = "n";
-}
 var sunState = (timeStamp - json.sys.sunrise) / (json.sys.sunset - json.sys.sunrise) *100; // current position of the sun between sunrise and sunset in percent
 document.getElementById("city").innerHTML = city;
 document.getElementById("temperature").innerHTML = "Current temperature: "+temperatue+"&#176; Celsius";
 document.getElementById("weather").innerHTML = "Current weather condition: "+weather;
-document.getElementById("weatherIcon").src = "http://openweathermap.org/img/w/"+weatherIdIcon[weatherId]+dayTime+".png";
+document.getElementById("weatherIcon").src = "http://openweathermap.org/img/w/"+weatherIcon+".png";
 /* Vendor prefixed versions for gradient backgrounds. I was only able to test positve on latest Firefox and Chromium. */
 document.body.style.background = "-moz-linear-gradient(left, #ffffff "+(sunState-10)+"%, #ffff00 "+sunState+"%, #ffffff "+(sunState+10)+"%)";
 document.body.style.background = "-webkit-linear-gradient(left, #ffffff "+(sunState-10)+"%,#ffff00 "+sunState+"%,#ffffff "+(sunState+10)+"%)";
