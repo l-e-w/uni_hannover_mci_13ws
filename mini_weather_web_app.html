@@ -48,8 +48,8 @@ document.body.style.background = "linear-gradient(to right, #ffffff "+(sunState-
 </head>
 <body onload="parse(JSON.parse(localStorage.json))">
 <h1 id ="city">Your City</h1>
-<input type="text" id="cityInput">
-<button onclick="send();">Send</button>
+<input type="text" id="cityInput" onkeydown="if (event.keyCode == 13) document.getElementById('send').click()" />
+<button id="send" onclick="send();">Send</button>
 <p id="temperature"></p>
 <p id="weather"></p>
 <img src="" id="weatherIcon" />
