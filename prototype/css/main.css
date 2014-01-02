@@ -1,0 +1,43 @@
+body {
+	background:#000;
+	color:#fff;
+}
+
+#wrapper {
+	-moz-box-sizing: border-box;
+	height:100%;
+	padding:.5%;
+	width:100%;
+}
+
+#header {
+	height:20%;
+}
+
+#content {
+	height:60%;
+}
+
+#footer {
+	height:20%;
+}
+
+#header div, #footer div {
+	height:100%;
+	float:left;
+}
+
+#qrcode {
+	width:20%;
+}
+
+#logo, #roomnr {
+	float:right !important;
+	width:30%;
+	text-align:right;
+}
+
+#roomnr {
+	font-weight:bold;
+	font-size:60px;
+}
