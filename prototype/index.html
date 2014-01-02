@@ -7,6 +7,13 @@ TODO:
 <head>
 	<link href="css/normalize.css" rel='stylesheet' type='text/css'>
 	<link href="css/main.css" rel='stylesheet' type='text/css'>
+	<script type="text/javascript">
+	function setRoom(){
+		var room = window.location.hash.substring(1);
+		document.getElementById("room").innerHTML = room;
+	}
+	window.onload = setRoom;
+	</script>
 </head>
 <body>
 <div id="wrapper">
@@ -21,7 +28,7 @@ TODO:
 	</div>
 	<div id="content"></div>
 	<div id="footer">
-		<div id="roomnr"><small>Raum</small> 123</div>
+		<div id="roomnr"><small>Raum</small> <span id="room"></span></div>
 	</div>
 </div>
 </body>
